@@ -1,11 +1,11 @@
-﻿// Copyright 2018 @youten_redo
-// MIT https://opensource.org/licenses/MIT
+﻿// (c) Unity Technologies Japan/UCL
+// http://unity-chan.com/contents/license_jp/
 using UnityEngine;
 using System.Collections;
 
-// 自動まばたき
-// ref. https://gist.github.com/dskjal/17034ad3b97bc6596248881f02caaafe
-// youten-yume2モデル対応
+// Auto Blink
+// This script based https://gist.github.com/dskjal/17034ad3b97bc6596248881f02caaafe
+// for youten-yume2 model
 namespace YVTuber {
 	public class AutoBlink : MonoBehaviour
 	{
@@ -67,8 +67,8 @@ namespace YVTuber {
 			}
 
 			private void setRatio(float ratio) {
-				refFace.SetBlendShapeWeight(0, ratio);
-				refFace.SetBlendShapeWeight(1, ratio);
+				refFace.SetBlendShapeWeight(0, ratio); // 0:left blink morph index
+				refFace.SetBlendShapeWeight(1, ratio); // 1:right blink morph index
 			}
 
 			// Must call every frame
@@ -99,7 +99,9 @@ namespace YVTuber {
 
 		void Awake ()
 		{
-			refFace = GameObject.Find("Body").GetComponent<SkinnedMeshRenderer>();
+			if (refFace == null) {
+				refFace = GameObject.Find("Body").GetComponent<SkinnedMeshRenderer>();
+			}
 			eyelidAnimator = new EyelidAnimator(refFace);
 		}
 
